@@ -3,19 +3,17 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { Argon2id } from "oslo/password";
-import { lucia, validateRequest } from "../auth/lucia";
-import { generateId } from "lucia";
-import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/index";
-
+import { eq } from "drizzle-orm";
+import { LegacyScrypt, generateId } from "lucia";
+import { lucia, validateRequest } from "../auth/lucia";
 import {
   genericError,
+  getUserAuth,
   setAuthCookie,
   validateAuthFormData,
-  getUserAuth,
 } from "../auth/utils";
-import { users, updateUserSchema } from "../db/schema/auth";
+import { updateUserSchema, users } from "../db/schema/auth";
 
 interface ActionResult {
   error: string;
@@ -39,8 +37,7 @@ export async function signInAction(
       };
     }
 
-    const validPassword = await new Argon2id().verify(
-      existingUser.hashedPassword,
+    const validPassword = await new LegacyScrypt().verify(existingUser.hashedPassword,
       data.password,
     );
     if (!validPassword) {
@@ -66,8 +63,7 @@ export async function signUpAction(
   const { data, error } = validateAuthFormData(formData);
 
   if (error !== null) return { error };
-
-  const hashedPassword = await new Argon2id().hash(data.password);
+  const hashedPassword = await new LegacyScrypt().hash(data.password);
   const userId = generateId(15);
 
   try {
