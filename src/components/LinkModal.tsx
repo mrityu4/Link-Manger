@@ -70,7 +70,7 @@ const LinkModal = ({ isOpen, onClose, folders, onSubmit, initialData = {} }: {
               ))}
             </select>
           </div>
-          <div className="flex justify-end gap-3">
+          <div className="flex justify-end gap-3 a">
             <button
               type="button"
               onClick={onClose}
