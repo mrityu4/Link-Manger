@@ -1,6 +1,7 @@
+export const runtime = "edge";
+
 import SignOutBtn from "@/components/auth/SignOutBtn";
 import { checkAuth, getUserAuth } from "@/lib/auth/utils";
-import Link from "next/link";
 import UserSettings from "./UserSettings";
 
 export default async function Account() {

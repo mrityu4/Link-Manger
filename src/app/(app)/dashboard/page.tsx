@@ -1,5 +1,5 @@
-import Navbar from "@/components/Navbar";
-import UserDetails from "@/components/UserDetails";
+export const runtime = "edge";
+
 import { getLinksAndFolders } from "@/lib/api/links/queries";
 import { Link } from "@/lib/db/schema/links";
 import LinksGrid from "./linksGrid";

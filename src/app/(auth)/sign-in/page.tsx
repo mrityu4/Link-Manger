@@ -1,5 +1,7 @@
 "use client";
 
+export const runtime = "edge";
+
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
